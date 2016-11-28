@@ -11,6 +11,7 @@ var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 
 // Databases
+
 var db = require('./server/db/index.js')
 var User = require('./server/db/users.js');
 var Chat = require('./server/db/chats.js');
