@@ -3,12 +3,53 @@
 <h1>JongChat</h1>
 <div class="container">
 <div>
-  <div id="chat" ng-init="vm.init()">
+  <div id="room">
+    <p ng-click="vm.mainSwitch()" ng-hide="!vm.mainState"> Main </p>
+    <p ng-click="vm.mksSwitch()" ng-hide="!vm.mksState"> MKS049 </p>
+    <p ng-click="vm.hrSwitch()" ng-hide="!vm.hrState"> HackReactor </p>
+    <p ng-click="vm.hangoutSwitch()" ng-hide="!vm.hangoutState"> The Hangout </p>
+  </div>
+
+  <!-- Main -->
+  <div id="chat" ng-init="vm.main()" ng-hide="vm.mainState">
+    <h2>Main</h2>
     <p ng-repeat="msg in vm.msgs track by $index">{{msg}}</p>
   </div>
-  <form ng-submit="vm.sendMessage()">
+  <form ng-submit="vm.sendMessageMain()" ng-hide="vm.mainState">
     <input type="text" ng-model="vm.msg.text"/>
     <input type="submit"/>
   </form>
+
+  <!-- MKS -->
+  <div id="chat" ng-init="vm.mks()" ng-hide="vm.mksState">
+    <h2>MKS049</h2>
+    <p ng-repeat="msg in vm.mksmsgs track by $index">{{msg}}</p>
+  </div>
+  <form ng-submit="vm.sendMessageMKS()" ng-hide="vm.mksState">
+    <input type="text" ng-model="vm.mksmsg.text"/>
+    <input type="submit"/>
+  </form>
+
+  <!-- Hackreactor -->
+  <div id="chat" ng-init="vm.hr()" ng-hide="vm.hrState">
+    <h2>HackReactor</h2>
+    <p ng-repeat="msg in vm.hrmsgs track by $index">{{msg}}</p>
+  </div>
+  <form ng-submit="vm.sendMessageHr()" ng-hide="vm.hrState">
+    <input type="text" ng-model="vm.hrmsg.text"/>
+    <input type="submit"/>
+  </form>
+
+  <!-- The Hangout -->
+  <div id="chat" ng-init="vm.hangout()" ng-hide="vm.hangoutState">
+    <h2>The Hangout</h2>
+    <p ng-repeat="msg in vm.hangoutmsgs track by $index">{{msg}}</p>
+  </div>
+  <form ng-submit="vm.sendMessageHangout()" ng-hide="vm.hangoutState">
+    <input type="text" ng-model="vm.hangoutmsg.text"/>
+    <input type="submit"/>
+  </form>
+
+
 </div>
 </div>
