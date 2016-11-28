@@ -162,6 +162,10 @@ io.sockets.on('connection', function(socket){
     })
   })
 
+  //try sending data via sockets on top of sockets.
+  // 
+  // socket.on('')
+
 })
 
 server.listen(port, function(){
