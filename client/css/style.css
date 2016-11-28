@@ -8,3 +8,7 @@ body {
   height: 400px;
   overflow: auto;
 }
+
+#chatwell {
+  margin: 1px;
+}

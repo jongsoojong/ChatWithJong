@@ -14,13 +14,14 @@
   </ul>
 </div>
 <br>
+<br>
 
 
   <!-- Main -->
   <div id="chat" ng-init="vm.main()" ng-hide="vm.mainState">
     <h2>Main</h2>
     <br>
-    <p ng-repeat="msg in vm.msgs track by $index">{{msg}}</p>
+    <p id="chatwell" class="well well-sm" ng-repeat="msg in vm.msgs track by $index">{{msg}}</p>
   </div>
   <form ng-submit="vm.sendMessageMain()" ng-hide="vm.mainState">
     <input type="text" ng-model="vm.msg.text"/>
@@ -31,7 +32,7 @@
   <div id="chat" ng-init="vm.mks()" ng-hide="vm.mksState">
     <h2>MKS049</h2>
     <br>
-    <p ng-repeat="msg in vm.mksmsgs track by $index">{{msg}}</p>
+    <p id="chatwell" class="well well-sm" ng-repeat="msg in vm.mksmsgs track by $index">{{msg}}</p>
   </div>
   <form ng-submit="vm.sendMessageMKS()" ng-hide="vm.mksState">
     <input type="text" ng-model="vm.mksmsg.text"/>
@@ -42,7 +43,7 @@
   <div id="chat" ng-init="vm.hr()" ng-hide="vm.hrState">
     <h2>HackReactor</h2>
     <br>
-    <p ng-repeat="msg in vm.hrmsgs track by $index">{{msg}}</p>
+    <p id="chatwell" class="well well-sm" ng-repeat="msg in vm.hrmsgs track by $index">{{msg}}</p>
   </div>
   <form ng-submit="vm.sendMessageHr()" ng-hide="vm.hrState">
     <input type="text" ng-model="vm.hrmsg.text"/>
@@ -53,7 +54,7 @@
   <div id="chat" ng-init="vm.hangout()" ng-hide="vm.hangoutState">
     <h2>The Hangout</h2>
     <br>
-    <p ng-repeat="msg in vm.hangoutmsgs track by $index">{{msg}}</p>
+    <p id="chatwell" class="well well-sm" ng-repeat="msg in vm.hangoutmsgs track by $index">{{msg}}</p>
   </div>
   <form ng-submit="vm.sendMessageHangout()" ng-hide="vm.hangoutState">
     <input type="text" ng-model="vm.hangoutmsg.text"/>
