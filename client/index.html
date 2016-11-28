@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app="jongChat">
+  <head>
+    <meta charset="utf-8">
+    <title>JongChat</title>
+
+    <!-- Angular CDNs -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.min.js"></script>
+
+    <!-- Socket.io -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/superhero/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+
+    <!-- JS -->
+    <script src="main.js"></script>
+
+    <!-- Controllers -->
+
+
+    <!-- Services -->
+
+
+
+  </head>
+
+<!-- NavBar -->
+
+  <div class="container">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="btn-group btn-group-lg" role="group" aria-label="...">
+        <button type="button" class="btn btn-default" ui-sref="login">Log In</button>
+        <button type="button" class="btn btn-default" ui-sref="signUp">Create Account</button>
+        <button type="button" class="btn btn-default">About the Creator</button>
+      </div>
+      </nav>
+  </div>
+
+  <body>
+    <!-- Templates go here -->
+
+    <div ui-view>  </div>
+
+  </body>
+</html>
