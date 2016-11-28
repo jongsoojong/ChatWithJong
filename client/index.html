@@ -28,6 +28,8 @@
     <script src="./controller/chatController.js"></script>
     <script src="./controller/loginController.js"></script>
     <script src="./controller/signUpController.js"></script>
+    <script src="./controller/privateController.js"></script>
+
 
     <!-- Services -->
 
@@ -36,16 +38,19 @@
   </head>
 
 <!-- NavBar -->
-
-  <div class="container">
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="btn-group btn-group-lg" role="group" aria-label="...">
-        <button type="button" class="btn btn-default" ui-sref="login">Log In</button>
-        <button type="button" class="btn btn-default" ui-sref="signUp">Create Account</button>
-        <button type="button" class="btn btn-default">About the Creator</button>
+    <!-- <div ng-controller="loginController as vm">
+      <div class="container">
+        <nav class="navbar navbar-default navbar-fixed-top">
+          <div class="btn-group btn-group-lg" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" ui-sref="login" ng-hide="!loginbutton">Log In</button>
+            <button type="button" class="btn btn-default" ng-click="vm.logout()" ng-hide="!logoutbutton">Log out</button>
+            <button type="button" class="btn btn-default" ui-sref="signUp" ng-hide="!createaccount">Create Account</button>
+            <button type="button" class="btn btn-default" ui-sref="privateRoom" ng-hide="!createroom">Create Room</button>
+            <button type="button" class="btn btn-default">About the Creator</button>
+          </div>
+          </nav>
       </div>
-      </nav>
-  </div>
+    </div> -->
 
   <body>
     <!-- Templates go here -->

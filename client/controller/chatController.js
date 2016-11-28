@@ -1,5 +1,6 @@
 angular.module('jongChat')
   .controller('chatController', function($scope, $state, $http, $location, socket, userInfo, getChatData){
+
     var vm = this;
     var thisDate = new Date;
 
@@ -42,6 +43,14 @@ angular.module('jongChat')
     }
 
     if(userInfo.isLogged === false){
+      $location.path('/login');
+    }
+
+    vm.logout = function(){
+      userInfo.isLogged = false;
+      userInfo.currentUsername = '';
+      userInfo.currentMessages = '';
+
       $location.path('/login');
     }
     // gonna make a global init, followed by 4 other chat room init.

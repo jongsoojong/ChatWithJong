@@ -1,6 +1,10 @@
 angular.module('jongChat')
-  .controller('signUpController', function($scope, $state, $http, $location){
+  .controller('signUpController', function($scope, $state, $http, $location, userInfo){
     var vm = this;
+
+    if(userInfo.isLogged === true){
+      $location.path('/main');
+    }
 
     vm.createUser = function() {
       if(vm.newUser.username.length <= 6 || vm.newUser.password.length <= 6) {

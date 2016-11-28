@@ -1,11 +1,20 @@
 <!-- Main Chat -->
 
 <div class="container">
+  <div class="container">
+        <nav class="navbar navbar-default navbar-fixed-top">
+          <div class="btn-group btn-group-lg" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" ng-click="vm.logout()">Log out</button>
+            <button type="button" class="btn btn-default" ui-sref="privateRoom" >Create Room</button>
+            <button type="button" class="btn btn-default">Friends</button>
+          </div>
+          </nav>
+    </div>
 <div>
 
   <div class="btn-group" id="bigdropdown">
-  <a href="#" class="btn btn-primary btn-lg">Public Chat Rooms</a>
-  <a href="#" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
+  <a class="btn btn-primary btn-lg">Public Chat Rooms</a>
+  <a class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
   <ul class="dropdown-menu">
     <li><a ng-click="vm.mainSwitch()" ng-hide="!vm.mainState"> Main </a></li>
     <li><a ng-click="vm.mksSwitch()" ng-hide="!vm.mksState"> MKS049 </a></li>

@@ -5,6 +5,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
+// Setup
 
 var app = express();
 var server = require('http').createServer(app);
@@ -15,6 +16,8 @@ var io = require('socket.io').listen(server);
 var db = require('./server/db/index.js')
 var User = require('./server/db/users.js');
 var Chat = require('./server/db/chats.js');
+var Privateroom = require('./server/db/private.js');
+
 
 
 app.use(express.static("./client"))
@@ -24,6 +27,7 @@ var port = process.env.PORT || 8888;
 app.get('/', function(req, res){
   res.sendFile(__dirname + "/client/index.html");
 })
+
 
 
 //initializes the chatrooms
@@ -77,13 +81,14 @@ Chat.findOne({name: "HackReactor"}, function(err, user){
   }
 });
 
+
+
+
 // Express Routes
 
-app.post('/api/user/signup', function(req, res) {
-  console.log(req.body)
-  var user = new User(req.body);
-  user.save()
-})
+
+
+// For global chatrooms
 
 app.get('/api/user/getmainchat', function(req, res){
   Chat.findOne({name: 'main'}, function(err, messages){
@@ -109,16 +114,36 @@ app.get('/api/user/gethangout', function(req, res){
   })
 })
 
+// Signup and Login
+
+var customChatRoomName = '';
+
+app.post('/api/user/signup', function(req, res) {
+  console.log(req.body);
+  var user = new User(req.body);
+  user.save();
+})
 
 app.post('/api/user/login', function(req, res) {
-  console.log(req.body)
   User.findOne(req.body, function(err, user){
-    console.log("THE USER ", user)
+    res.send(user);
+  })
+})
+
+app.post('/api/user/private', function(req, res){
+  console.log('created private room', req.body);
+  var privateRoom = new Privateroom(req.body);
+  privateRoom.save();
+})
+
+app.post('/api/user/privatelogin', function(req, res) {
+  Privateroom.findOne(req.body, function(err, user){
     res.send(user);
   })
 })
 
 // Socket.io listeners and emitters
+
 
 io.sockets.on('connection', function(socket){
   // socket.removeAllListeners()
@@ -162,9 +187,10 @@ io.sockets.on('connection', function(socket){
     })
   })
 
-  //try sending data via sockets on top of sockets.
-  // 
-  // socket.on('')
+   //
+  //  socket.on('find-private-room', function(data){
+   //
+  //  })
 
 })
 

@@ -2,7 +2,9 @@
 var socketApp = angular.module('jongChat', ['ui.router']);
 
 
-socketApp.config(function($stateProvider){
+socketApp.config(function($stateProvider, $urlRouterProvider){
+
+  $urlRouterProvider.otherwise('/');
 
   $stateProvider.state('signUp', {
     url: "/signup",
@@ -26,6 +28,22 @@ socketApp.config(function($stateProvider){
     url: "/",
     templateUrl: "./templates/intro.html" ,
   })
+
+  $stateProvider.state('about', {
+    url: "/about",
+    templateUrl: "./templates/about.html"
+  })
+
+  $stateProvider.state('privateRoom', {
+    url: "/privateroom",
+    templateUrl: "./templates/privateroom.html",
+    controller: "privateController as vm"
+  })
+
+  $stateProvider.state("otherwise", {
+    url : '/'
+  })
+
 
 
 
@@ -55,31 +73,19 @@ socketApp.factory('userInfo', function($http){
 
 socketApp.factory('makeChat', function($http){
 
-  var makeData = function(chatName){
+  var makeData = function(name, password){
     return $http({
       method:'POST',
-      url: '/api/newChat',
+      url: '/api/user/privatelogin',
       data: {
         "name": name,
+        "password": password,
         "chat": []
       }
     })
   }
 
-})
-
-socketApp.factory('updateChat', function($http){
-
-  var getData = function(chatName){
-    return $http({
-      method:'POST',
-      url: '/api/newChat',
-      data: {
-        "name": name,
-        "chat": []
-      }
-    })
-  }
+  return makeData;
 
 })
 
