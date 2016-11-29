@@ -53,14 +53,9 @@ socketApp.config(function($stateProvider, $urlRouterProvider){
     controller: "privateController as vm"
   })
 
-
-
   $stateProvider.state("otherwise", {
     url : '/'
   })
-
-
-
 
 })
 

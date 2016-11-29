@@ -25,7 +25,6 @@ A full-stack Chat app
 
 - Jongsoo Yoon
 
-
 ##License
 
 ISC
