@@ -1,6 +1,11 @@
 
 body {
   margin-top: 80px;
+  margin-left: 10px;
+  background-image: url("../images/background.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+
 }
 
 #chat {

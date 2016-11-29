@@ -65,7 +65,7 @@ socketApp.config(function($stateProvider, $urlRouterProvider){
 socketApp.factory('socket', function($location){
   var socket = io.connect($location.absUrl());
   return socket;
-})
+});
 
 socketApp.factory('userInfo', function($http){
 
@@ -81,7 +81,7 @@ socketApp.factory('userInfo', function($http){
     isLogged : isLogged
   }
 
-})
+});
 
 socketApp.factory('makeChat', function($http){
 
@@ -99,7 +99,7 @@ socketApp.factory('makeChat', function($http){
 
   return makeData;
 
-})
+});
 
 
 socketApp.factory('getChatData', function($http){
@@ -115,4 +115,4 @@ socketApp.factory('getChatData', function($http){
     getData: getData
   }
 
-})
+});

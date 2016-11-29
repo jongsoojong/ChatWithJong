@@ -4,7 +4,7 @@ angular.module('jongChat')
     var vm = this;
     var thisDate = new Date;
 
-    vm.messagePrompt =  userInfo.currentUsername + " (" + thisDate.toLocaleString() + ")" + ' : '
+    vm.messagePrompt =  userInfo.currentUsername + " (" + thisDate.toLocaleString() + ")" + ' : ';
     vm.msgs = [];
     vm.hangoutmsgs = [];
     vm.hrmsgs = [];
@@ -58,28 +58,28 @@ angular.module('jongChat')
     vm.main = function() {
       $http.get('/api/user/getmainchat')
       .then(function(results){
-        vm.msgs = results.data.chat
+        vm.msgs = results.data.chat;
       })
     }
 
     vm.mks = function() {
       $http.get('/api/user/getmks')
       .then(function(results){
-        vm.mksmsgs = results.data.chat
+        vm.mksmsgs = results.data.chat;
       })
     }
 
     vm.hr = function() {
       $http.get('/api/user/gethr')
       .then(function(results){
-        vm.hrmsgs = results.data.chat
+        vm.hrmsgs = results.data.chat;
       })
     }
 
     vm.hangout = function() {
       $http.get('/api/user/gethangout')
       .then(function(results){
-        vm.hangoutmsgs = results.data.chat
+        vm.hangoutmsgs = results.data.chat;
       })
     }
 

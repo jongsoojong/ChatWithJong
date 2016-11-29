@@ -86,8 +86,6 @@ angular.module('jongChat')
             alert("WELCOME!")
             userInfo.isPrivateLogged = true;
             userInfo.privateRoomName = vm.roomInfo.name;
-            console.log(vm.roomInfo.name)
-            console.log(userInfo)
             socket.emit('private-message-update', vm.roomInfo.name)
             $location.path("/privateroom");
           }
@@ -95,5 +93,4 @@ angular.module('jongChat')
           console.log(err);
         })
     };
-
-  })
+  });
