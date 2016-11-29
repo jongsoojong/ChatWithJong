@@ -34,7 +34,6 @@ app.get('/', function(req, res){
 
 
 Chat.findOne({name: "main"}, function(err, user){
-  console.log("THE USER ", user)
   if(user === null) {
     Chat.create({
       "name": "main",
@@ -46,7 +45,6 @@ Chat.findOne({name: "main"}, function(err, user){
 });
 
 Chat.findOne({name: "MKS049"}, function(err, user){
-  console.log("THE USER ", user)
   if(user === null) {
     Chat.create({
       "name": "MKS049",
@@ -58,7 +56,6 @@ Chat.findOne({name: "MKS049"}, function(err, user){
 });
 
 Chat.findOne({name: "The Hangout"}, function(err, user){
-  console.log("THE USER ", user)
   if(user === null) {
     Chat.create({
       "name": "The Hangout",
@@ -70,7 +67,6 @@ Chat.findOne({name: "The Hangout"}, function(err, user){
 });
 
 Chat.findOne({name: "HackReactor"}, function(err, user){
-  console.log("THE USER ", user)
   if(user === null) {
     Chat.create({
       "name": "HackReactor",
@@ -116,9 +112,15 @@ app.get('/api/user/gethangout', function(req, res){
 var users = {};
 
 app.post('/api/user/signup', function(req, res) {
-  console.log(req.body);
-  var user = new User(req.body);
-  user.save();
+  User.findOne({username: req.body.username}, function(err, data){
+    if(data === null) {
+      console.log("new User", req.body);
+      var user = new User(req.body);
+      user.save();
+    } else {
+      console.log("User exists");
+    }
+  })
 })
 
 app.post('/api/user/login', function(req, res) {
@@ -130,32 +132,26 @@ app.post('/api/user/login', function(req, res) {
 //----------Private Rooms -------------------
 
 app.post('/api/user/private', function(req, res){
-  console.log('created private room', req.body);
-  var privateRoom = new Privateroom(req.body);
-  privateRoom.save();
-})
-
-app.get('/api/user/getprivate', function(req, res){
-  console.log("I AM HITTING IT", req.body)
-  Privateroom.findOne({name: req.body.privateRoomName}, function(err, messages){
-    res.send(messages)
-    console.log("WHAT IS THIS MESSAGE", messages)
+  Privateroom.findOne({name: req.body.name}, function(err, data){
+    if(data === null) {
+      console.log('created private room', req.body);
+      var privateRoom = new Privateroom(req.body);
+      privateRoom.save();
+    } else {
+      console.log("ROOM EXISTS");
+    }
   })
+
 })
 
 app.post('/api/user/postprivate', function(req, res){
-  console.log("PRIVATENAME", req.body)
-  Privateroom.findOneAndUpdate({name: req.body.privateRoomName}, {$push: { chat: req.body.currentMessages } }, {upsert:true}, function(err, messages){
-    console.log("THIS IS WHAT IS GOING BACK", messages)
-    console.log("THIS IS WHAT TESTING IS", messages.chat)
-    res.send(messages)
+  Privateroom.findOne({name: req.body.privateRoomName}, function(err, messages){
+    res.send(messages);
   })
 })
 
 app.post('/api/user/privatelogin', function(req, res) {
-  console.log(req.body)
   Privateroom.findOne({name: req.body.name}, function(err, user){
-    console.log('get user', user)
     res.send(user);
   })
 })
@@ -163,7 +159,6 @@ app.post('/api/user/privatelogin', function(req, res) {
 // -----------Socket.io listeners and emitters------------------
 
 io.sockets.on('connection', function(socket){
-
 
   socket.on('send-message-main', function(data){
     io.sockets.emit('get-message-main', data)
@@ -188,6 +183,14 @@ io.sockets.on('connection', function(socket){
     Chat.findOneAndUpdate({name: 'The Hangout'}, {$push: { chat: data } }, {upsert:true}, function(err, message){
     })
   })
+
+  socket.on('send-message-private', function(data){
+      io.sockets.emit('get-message-private', data);
+      Privateroom.findOneAndUpdate({name: data.roomName}, {$push: { chat: data.msg } }, {upsert:true}, function(err, message){
+      })
+    })
+
+
 
 })
 

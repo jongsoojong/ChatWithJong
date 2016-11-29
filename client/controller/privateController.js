@@ -2,7 +2,9 @@ angular.module('jongChat')
   .controller('privateController', function($scope, $state, $http, $location, socket, userInfo){
 
     var vm = this;
+    var thisDate = new Date;
 
+    vm.messagePrompt =  userInfo.currentUsername + " (" + thisDate.toLocaleString() + ")" + ' : '
     vm.privatemessages = [];
 
     if(userInfo.isLogged === false){
@@ -11,12 +13,14 @@ angular.module('jongChat')
 
 
     vm.privateInit = function() {
-      $http.get('/api/user/getprivate', userInfo)
-      .then(function(results){
-      console.log(results)
-      vm.privatemessages = results.chat
-      })
-    }
+          $http.post('/api/user/postprivate', userInfo)
+          .success(function(res){
+            if(res.chat !== undefined)
+            {
+                vm.privatemessages = res.chat;
+            }
+          });
+        }
 
     vm.logout = function(){
       userInfo.isLogged = false;
@@ -31,25 +35,30 @@ angular.module('jongChat')
       userInfo.privateRoomName = '';
       userInfo.currentMessages = '';
 
-      $location.path('/main')
     }
 
 
+
+
+
+
     vm.sendPrivateMessage = function() {
-      console.log(vm.privatemessage.text)
-      userInfo.currentMessages = vm.privatemessage.text
-      console.log("THIS IS USERINFO", userInfo);
-      vm.privatemessage.text = ''
-      $http.post('/api/user/postprivate', userInfo)
-      .success(function(res){
-      }).error(function(err){
-        console.log(err);
-      })
-      vm.privateInit();
-      //$route.reload()
+      var chat = {
+          'roomName': userInfo.privateRoomName,
+          'msg': vm.messagePrompt + vm.privatemessage.text
+      }
+      socket.emit('send-message-private', chat);
+      vm.privatemessage.text = '';
     };
 
-
+    socket.on('get-message-private', function(data){
+          if(data.roomName === userInfo.privateRoomName)
+          {
+            userInfo.currentMessages = data.msg;
+            vm.privatemessages.push(data.msg);
+            $scope.$digest();
+          }
+        })
 
     vm.createPrivateRoom = function() {
       if(vm.newRoom.name.length <= 6 || vm.newRoom.password.length <= 6) {
