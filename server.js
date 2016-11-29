@@ -133,14 +133,16 @@ app.post('/api/user/login', function(req, res) {
 
 app.post('/api/user/private', function(req, res){
   Privateroom.findOne({name: req.body.name}, function(err, data){
+    var created = true;
     if(data === null) {
       console.log('created private room', req.body);
       var privateRoom = new Privateroom(req.body);
       privateRoom.save();
-      res.send(data);
     } else {
       console.log("ROOM EXISTS");
+      created = false;
     }
+    res.send(created);
   })
 })
 
@@ -151,7 +153,7 @@ app.post('/api/user/postprivate', function(req, res){
 })
 
 app.post('/api/user/privatelogin', function(req, res) {
-  Privateroom.findOne({name: req.body.name}, function(err, user){
+  Privateroom.findOne(req.body, function(err, user){
     res.send(user);
   })
 })

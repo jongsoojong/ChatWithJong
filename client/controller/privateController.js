@@ -52,19 +52,19 @@ angular.module('jongChat')
   })
 
   vm.createPrivateRoom = function() {
-    if(vm.newRoom.name.length <= 6 || vm.newRoom.password.length <= 6) {
-      alert("Chatroom and/or password is too short!");
-    } else {
-      alert("Room Created!");
-      console.log(vm.newRoom);
-      $http.post('/api/user/private', vm.newRoom)
-      .success(function(res){
-        vm.loginPrivateRoom(vm.newRoom);
-      }).error(function(err){
-        console.log(err);
-      })
-    }
-  };
+      if(vm.newRoom.name.length <= 6 || vm.newRoom.password.length <= 6) {
+        alert("Chatroom and/or password is too short!");
+      } else {
+        console.log(vm.newRoom);
+        $http.post('/api/user/private', vm.newRoom)
+        .success(function(res){
+          alert(res ? "Room created" : "Room already created. Logging in.");
+          vm.loginPrivateRoom(vm.newRoom);
+        }).error(function(err){
+          console.log(err);
+        })
+      }
+    };
 
   vm.loginPrivateRoom = function(roomInfo) {
     if(roomInfo === undefined) {
