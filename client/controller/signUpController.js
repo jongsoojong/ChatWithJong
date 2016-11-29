@@ -8,7 +8,7 @@ angular.module('jongChat')
 
     vm.createUser = function() {
       if(vm.newUser.username.length <= 6 || vm.newUser.password.length <= 6) {
-        alert("Username or password is too short! ", $location);
+        alert("Username or password is too short! ");
       } else {
         alert("Account Created!");
         console.log(vm.newUser);

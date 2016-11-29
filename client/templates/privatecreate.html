@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="container">
+        <nav class="navbar navbar-default navbar-fixed-top">
+          <div class="btn-group btn-group-lg" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" ng-click="vm.logout()">Log out</button>
+            <button type="button" class="btn btn-default" ui-sref="chatRoom">Public Chat Rooms</button>
+            <button type="button" class="btn btn-default" ui-sref="privatelogin">Login Private Room</button>
+            <button type="button" class="btn btn-default">Friends</button>
+          </div>
+          </nav>
+    </div>
+<div>
+</div>
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3">
+  <h3>Create Private Room</h3>
+    <form>
+      <div class="form-group">
+        <label class="jongLabel">Room Name: </label>
+        <input type="text" ng-model="vm.newRoom.name" class="form-control" placeholder="Room Name">
+      </div>
+      <div class="form-group">
+        <label class="jongLabel">Password: </label>
+        <input type="password" ng-model="vm.newRoom.password" class="form-control" placeholder="Password">
+      </div>
+    </form>
+
+  <div class="btn-group btn-group" role="group" aria-label="...">
+    <button type="button" class="btn btn-default" ng-click="vm.createPrivateRoom()">Create User</button>
+  </div>
+
+
+  </div>
+</div>
+</div>

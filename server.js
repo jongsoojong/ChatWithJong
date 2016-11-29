@@ -82,13 +82,9 @@ Chat.findOne({name: "HackReactor"}, function(err, user){
 });
 
 
-
-
 // Express Routes
 
-
-
-// For global chatrooms
+// -------------For global chatrooms-------------------
 
 app.get('/api/user/getmainchat', function(req, res){
   Chat.findOne({name: 'main'}, function(err, messages){
@@ -114,9 +110,10 @@ app.get('/api/user/gethangout', function(req, res){
   })
 })
 
-// Signup and Login
 
-var customChatRoomName = '';
+// ----------Signup and Login----------------
+
+var users = {};
 
 app.post('/api/user/signup', function(req, res) {
   console.log(req.body);
@@ -130,67 +127,67 @@ app.post('/api/user/login', function(req, res) {
   })
 })
 
+//----------Private Rooms -------------------
+
 app.post('/api/user/private', function(req, res){
   console.log('created private room', req.body);
   var privateRoom = new Privateroom(req.body);
   privateRoom.save();
 })
 
+app.get('/api/user/getprivate', function(req, res){
+  console.log("I AM HITTING IT", req.body)
+  Privateroom.findOne({name: req.body.privateRoomName}, function(err, messages){
+    res.send(messages)
+    console.log("WHAT IS THIS MESSAGE", messages)
+  })
+})
+
+app.post('/api/user/postprivate', function(req, res){
+  console.log("PRIVATENAME", req.body)
+  Privateroom.findOneAndUpdate({name: req.body.privateRoomName}, {$push: { chat: req.body.currentMessages } }, {upsert:true}, function(err, messages){
+    console.log("THIS IS WHAT IS GOING BACK", messages)
+    console.log("THIS IS WHAT TESTING IS", messages.chat)
+    res.send(messages)
+  })
+})
+
 app.post('/api/user/privatelogin', function(req, res) {
-  Privateroom.findOne(req.body, function(err, user){
+  console.log(req.body)
+  Privateroom.findOne({name: req.body.name}, function(err, user){
+    console.log('get user', user)
     res.send(user);
   })
 })
 
-// Socket.io listeners and emitters
-
+// -----------Socket.io listeners and emitters------------------
 
 io.sockets.on('connection', function(socket){
-  // socket.removeAllListeners()
-  // socket.on('disconnect', function () {
-  //   setTimeout(function () {
-  //        //do something
-  //   }, 10000);
-  // });
 
-  //socket listeners for main chat room
 
   socket.on('send-message-main', function(data){
-    console.log("SOCKETDATA ",data)
     io.sockets.emit('get-message-main', data)
     Chat.findOneAndUpdate({name: 'main'}, {$push: { chat: data } }, {upsert:true}, function(err, message){
-      console.log("AHHHHH!")
     })
   })
 
   socket.on('send-message-mks', function(data){
-    console.log("SOCKETDATA ",data)
     io.sockets.emit('get-message-mks', data)
     Chat.findOneAndUpdate({name: 'MKS049'}, {$push: { chat: data } }, {upsert:true}, function(err, message){
-      console.log("MKS!")
     })
   })
 
   socket.on('send-message-hr', function(data){
-    console.log("SOCKETDATA ",data)
     io.sockets.emit('get-message-hr', data)
     Chat.findOneAndUpdate({name: 'HackReactor'}, {$push: { chat: data } }, {upsert:true}, function(err, message){
-      console.log("HR!")
     })
   })
 
   socket.on('send-message-hangout', function(data){
-    console.log("SOCKETDATA ",data)
     io.sockets.emit('get-message-hangout', data)
     Chat.findOneAndUpdate({name: 'The Hangout'}, {$push: { chat: data } }, {upsert:true}, function(err, message){
-      console.log("Hangout!")
     })
   })
-
-   //
-  //  socket.on('find-private-room', function(data){
-   //
-  //  })
 
 })
 

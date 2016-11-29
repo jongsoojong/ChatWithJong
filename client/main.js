@@ -34,11 +34,26 @@ socketApp.config(function($stateProvider, $urlRouterProvider){
     templateUrl: "./templates/about.html"
   })
 
-  $stateProvider.state('privateRoom', {
+  $stateProvider.state('privatecreate', {
+    url: "/privatecreate",
+    templateUrl: "./templates/privatecreate.html",
+    controller: "privateController as vm"
+  })
+
+
+  $stateProvider.state('privatelogin', {
+    url: "/privatelogin",
+    templateUrl: "./templates/privatelogin.html",
+    controller: "privateController as vm"
+  })
+
+  $stateProvider.state('privateroom', {
     url: "/privateroom",
     templateUrl: "./templates/privateroom.html",
     controller: "privateController as vm"
   })
+
+
 
   $stateProvider.state("otherwise", {
     url : '/'
@@ -61,7 +76,9 @@ socketApp.factory('userInfo', function($http){
 
   var currentUsername = '';
   var currentMessages = '';
+  var privateRoomName = '';
   var isLogged = false;
+  var isPrivateLogged = false;
 
   return {
     currentUsername: currentUsername,

@@ -1,11 +1,11 @@
 angular.module('jongChat')
-  .controller('loginController', function($scope, $state, $http, $location, userInfo){
+  .controller('loginController', function($scope, $state, $http, $location, userInfo, socket){
     var vm = this;
 
     if(userInfo.isLogged === true){
       $location.path('/main');
     }
-    
+
     vm.login = function() {
       $http.post('/api/user/login', vm.userlogin)
       .success(function(res){
@@ -16,8 +16,10 @@ angular.module('jongChat')
         } else {
           alert("Logged in!")
           $location.path("/main");
+          socket.emit("new-user", vm.userlogin.username)
           userInfo.currentUsername = vm.userlogin.username;
           userInfo.isLogged = true;
+
           console.log(userInfo)
         }
       }).error(function(err){
